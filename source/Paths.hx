@@ -5,11 +5,7 @@ import openfl.utils.Assets;
 import openfl.media.Sound;
 import flixel.graphics.FlxGraphic;
 
-enum FontType
-{
-	TTF;
-	OTF;
-}
+using StringTools;
 
 enum FileType
 {
@@ -18,8 +14,13 @@ enum FileType
 	JSON;
 	IMAGE;
 	SOUND;
-	MUSIC;
 	FONT(type:FontType);
+}
+
+enum FontType
+{
+	TTF;
+	OTF;
 }
 
 class Paths
@@ -27,59 +28,55 @@ class Paths
 	static var imagesLoaded:Map<String, FlxGraphic> = [];
 	static var soundsLoaded:Map<String, Sound> = [];
 
-	public static function getPath(key:String, ?type:FileType, ?customDirectory:String)
+	public static function getPath(key:String, type:FileType, ?customDirectory:String)
 	{
 		var path:String = 'assets/';
 		if (customDirectory != null)
 			path += customDirectory;
 
-		if (type != null)
+		switch (type)
 		{
-			switch (type)
-			{
-				case TEXT:
-					if (customDirectory == null)
-						path += 'data';
-					path += '/$key.txt';
-				case XML:
-					if (customDirectory == null)
-						path += 'data';
-					path += '/$key.xml';
-				case JSON:
-					if (customDirectory == null)
-						path += 'data';
-					path += '/$key.json';
-				case IMAGE:
-					if (customDirectory == null)
-						path += 'images';
-					path += '/$key.png';
-				case SOUND | MUSIC:
-					if (customDirectory == null)
-					{
-						if (type == MUSIC)
-							path += 'music';
-						else
-							path += 'sounds';
-					}
-					path += '/$key.ogg';
-				case FONT(type):
-					if (customDirectory == null)
-						path += 'fonts';
-					path += '/$key';
-					if (type == OTF)
-						path += '.otf';
+			case TEXT:
+				if (customDirectory == null)
+					path += 'data';
+				path += '/$key.txt';
+			case XML:
+				if (customDirectory == null)
+					path += 'data';
+				path += '/$key.xml';
+			case JSON:
+				if (customDirectory == null)
+					path += 'data';
+				path += '/$key.json';
+			case IMAGE:
+				if (customDirectory == null)
+					path += 'images';
+				path += '/$key.png';
+			case SOUND | MUSIC:
+				if (customDirectory == null)
+				{
+					if (type == MUSIC)
+						path += 'music';
 					else
-						path += '.ttf';
-			}
-		}
-		else
-		{
-			if (customDirectory != null && customDirectory.length > 0)
-				path += '/';
-			path += key;
+						path += 'sounds';
+				}
+				path += '/$key.ogg';
+			case FONT(type):
+				if (customDirectory == null)
+					path += 'fonts';
+				path += '/$key';
+				if (type == OTF)
+					path += '.otf';
+				else
+					path += '.ttf';
 		}
 
 		return path;
+	}
+
+	inline public static function formatToSongPath(path:String)
+	{
+		return path.toLowerCase().replace('-', ' ');
 	}
 
 	public static function image(key:String, ?customDirectory:String)
