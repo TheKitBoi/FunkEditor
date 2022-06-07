@@ -45,6 +45,7 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals()
 	{
+		// bitch
 		vocals.pause();
 		inst.play();
 		Conductor.songPosition = inst.time;
