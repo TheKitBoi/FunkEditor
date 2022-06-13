@@ -2,6 +2,7 @@ package;
 
 import Song.SwagSong;
 
+// FNF ENJOYER ALERT!!
 typedef BPMChangeEvent =
 {
 	var stepTime:Int;
