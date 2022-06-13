@@ -13,7 +13,8 @@ enum FileType
 	XML;
 	JSON;
 	IMAGE;
-	SOUND | MUSIC;
+	SOUND;
+	MUSIC;
 	FONT(type:FontType);
 }
 
